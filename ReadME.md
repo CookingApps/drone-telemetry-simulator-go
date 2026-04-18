@@ -1,67 +1,96 @@
-# 🚁 Naija Drone Ground Control Simulator (Golang)
+
+#  Drone Ground Control Simulator (Golang)
 
 A realistic **drone telemetry simulator** and lightweight **Ground Control Station (GCS)** backend built in Go.
 
-Designed to demonstrate skills relevant to autonomous drone systems in Nigeria and Africa — real-time data streaming, concurrency, REST + WebSocket APIs, and mission control concepts.
+This project simulates a drone flying in real-time and exposes a clean API + WebSocket for monitoring and controlling it — exactly the kind of backend systems used in autonomous drone operations.
 
-Perfect for showing readiness to contribute to companies building drones like **Terra Industries**, **Briech UAS**, **radahTech**, and **Arone Technologies**.
+## ✨ Features
 
-## Features
-
-- Realistic telemetry simulation (GPS, altitude, speed, battery, heading)
-- Real-time WebSocket streaming (live updates every 2s)
-- REST API for drone control (Takeoff, Land, Add Waypoint, Status)
-- Proper concurrency handling with mutex
+- Realistic real-time telemetry simulation (GPS position, altitude, speed, battery, heading)
+- Live WebSocket streaming for telemetry updates every 2 seconds
+- REST API for drone control (Takeoff, Land, Add Waypoint, Get Status)
+- Proper concurrency handling using mutex (thread-safe)
 - Structured logging with Logrus
-- Docker support + Makefile for easy development
-- Clean, layered architecture (internal folders)
+- Clean layered architecture
+- Full Docker support + Makefile for easy development
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- Go 1.23
+- **Go** 1.23
 - Gin Web Framework
 - Gorilla WebSocket
-- Logrus for logging
+- Logrus (structured logging)
 - Docker
 
-## Quick Start
+## 🚀 Quick Start
 
+### Run Locally
 ```bash
 git clone https://github.com/CookingApps/drone-telemetry-simulator-go.git
 cd drone-telemetry-simulator-go
-make run
-Server runs on http://localhost:8080
-API Endpoints
 
-GET / → Welcome message
-GET /api/v1/status → Current telemetry
-POST /api/v1/takeoff
-POST /api/v1/land
-POST /api/v1/waypoint → Body: {"latitude": 9.08, "longitude": 7.40, "altitude": 80}
-GET /ws/telemetry → WebSocket live feed
-
-Docker
-Bashmake docker
-docker run -p 8080:8080 drone-simulator
-Project Architecture
-textinternal/
-├── drone/      # Core drone logic & simulation
-├── handlers/   # HTTP + WebSocket handlers
-└── server/     # Gin server setup
-Why This Project?
-
-Shows understanding of real-time systems (critical for drone GCS)
-Handles concurrency safely (multiple clients + simulation)
-Demonstrates clean API design and scalability thinking
-Directly relevant to drone autonomy, fleet management, and data pipelines
-
-Future Enhancements (I plan to add):
-
-Persistent storage (PostgreSQL/Redis)
-Multiple drone support (fleet mode)
-Simple mission planner with path following
-Integration with PX4/MAVLink simulation (if possible)
-
-Built from Abuja with passion for Nigeria's growing drone industry.
-Star ⭐ if you find it useful!
+# Run with Go
+go run main.go
 ```
+
+Server will start at `http://localhost:8080`
+
+### Using Docker
+```bash
+docker build -t drone-simulator .
+docker run -p 8080:8080 drone-simulator
+```
+
+## 📡 API Endpoints
+
+| Method | Endpoint                  | Description                          |
+|--------|---------------------------|--------------------------------------|
+| GET    | `/`                       | Welcome message                      |
+| GET    | `/api/v1/status`          | Get current drone telemetry          |
+| POST   | `/api/v1/takeoff`         | Command drone to takeoff             |
+| POST   | `/api/v1/land`            | Command drone to land                |
+| POST   | `/api/v1/waypoint`        | Add a waypoint (JSON body)           |
+| GET    | `/ws/telemetry`           | WebSocket - Live telemetry streaming |
+
+### Example Waypoint Request
+```json
+POST /api/v1/waypoint
+{
+  "latitude": 9.0820,
+  "longitude": 7.4100,
+  "altitude": 80
+}
+```
+
+## 📁 Project Structure
+```
+internal/
+├── drone/      → Core drone logic and simulation
+├── handlers/   → HTTP and WebSocket handlers
+└── server/     → Gin server setup and routing
+```
+
+## 🎯 Why I Built This
+
+- Demonstrates understanding of **real-time systems** (very important for drone ground stations)
+- Shows safe **concurrency** and state management
+- Practices clean API design and scalable backend patterns
+
+This project proves I can build reliable backend systems that handle live drone data — even though I’m still early in my drone software journey, I’m eager to learn and contribute.
+
+## 🔮 Future Improvements (Planned)
+- Support for multiple drones (fleet mode)
+- Persistent storage with PostgreSQL or Redis
+- Basic mission planner with path following
+- Integration with PX4/MAVLink simulation
+- Authentication & API keys
+
+---
+
+Its CookingApps
+
+Passionate about drones, autonomous systems, and building impactful technology for Africa.
+
+Feel free to star ⭐ the repo if you find it useful!
+
