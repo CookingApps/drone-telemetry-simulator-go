@@ -27,7 +27,7 @@ Perfect for showing readiness to contribute to companies building drones like **
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/drone-telemetry-simulator-go.git
+git clone https://github.com/CookingApps/drone-telemetry-simulator-go.git
 cd drone-telemetry-simulator-go
 make run
 Server runs on http://localhost:8080
